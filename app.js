@@ -4,34 +4,24 @@ const bodyParser = require("body-parser");
 const config = require("config");
 const mongoose = require("mongoose");
 const {MongoClient} = require("mongodb");
-const CrudMongo = require('./CrudMongo')
+const CrudMongo = require('./CrudMongo');
+const router = require('./routes')
 const app = express();
 
+
+app.set('view engine','ejs')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 
 const PORT = process.env.port || 8080;
 
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-app.post("/quotes", (req, res) => {
-  console.log(req.body);
-  let {name,quote} = req.body;
-  let crudmongo = new CrudMongo({
-    name,
-    quote
-  })
-  crudmongo.save()
-  .then(
-    () => console.log("One entry added"), 
-    (err) => console.log(err)
-);
-res.sendFile(__dirname + "/index.html");
-
-});
+app.use('/',router)
+// app.get("/", (req, res) => {
+//   // res.sendFile(__dirname + "/index.html");
+//   res.render('index')
+// });
+// app.post("/quotes", );
 
 
 

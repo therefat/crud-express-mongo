@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/quotes" method="POST">
+      <input type="text" placeholder="name" name="name" />
+      <input type="text" placeholder="quote" name="quote" />
+      <button type="submit">Submit</button>
+
+    </form>
+    <div>
+        <h4>Your Contacts</h4>
+        <table class="table">
+          <thead>
+            <tr>
+  
+              <td>Name</td>
+              <td>Phone</td>
+              <td>Email</td>
+  
+            </tr>
+          </thead>
+          <tbody>
+  
+  
+            <% for(let crudmongo of crudmongos) { %>
+              <tr>
+  
+                <td>
+                  <%= crudmongo.name %>
+                </td>
+                <td>
+                  <%= crudmongo.quote %>
+                </td>
+                
+                <td>
+                    <button class="btn btn-warning btn-sm edit-btn" 
+                    data-name="<%= crudmongo.name %>"
+                    
+                    data-email="<%= crudmongo.quote %>"
+                    data-id="<%= crudmongo._id %>"
+                     >
+                    Edit
+                  </button>
+                  <a href="/contacts/delet/<%= crudmongo._id %>" class="btn btn-warning btn-sm">
+                    Delete
+                  </a>
+                </td>
+              </tr>
+  
+              <% } %>
+  
+  
+          </tbody>
+        </table>
+      </div>
+    
+  </body>
+</html>
