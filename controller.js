@@ -14,7 +14,7 @@ exports.getAllquotes = (req,res) => {
 
 }
 exports.createQuotes = (req, res) => {
-    console.log(req.body);
+    
     let {name,quote,id} = req.body;
     let error = {};
     if(!name){

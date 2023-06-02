@@ -6,14 +6,14 @@ const crudMongoSchema = new Schema({
         required : true,
         trim:true,
         minlength: 2,
-        maxlenght: 30
+        maxlenght: 200
     },
     quote: {
         type: String,
         required : true,
         trim:true,
         minlength: 2,
-        maxlenght: 30
+        maxlenght:1500
     }
 })
 const CrudMongo = model('CrudMongo',crudMongoSchema);
