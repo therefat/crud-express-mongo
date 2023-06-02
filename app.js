@@ -17,13 +17,6 @@ app.use(bodyParser.json())
 const PORT = process.env.port || 8080;
 
 app.use('/',router)
-// app.get("/", (req, res) => {
-//   // res.sendFile(__dirname + "/index.html");
-//   res.render('index')
-// });
-// app.post("/quotes", );
-
-
 
 
 
