@@ -8,10 +8,11 @@ const CrudMongo = require('./CrudMongo');
 const router = require('./routes')
 const app = express();
 
-
+app.use(express.static('public'));
 app.set('view engine','ejs')
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: false}));
+app.use(express.json())
 
 
 const PORT = process.env.port || 8080;

@@ -15,71 +15,81 @@ exports.getAllquotes = (req,res) => {
 }
 exports.createQuotes = (req, res) => {
     
-    let {name,quote,id} = req.body;
-    let error = {};
-    if(!name){
-        error.name = "Please Provide a Name"
-    }
-    if(!quote){
-        error.quote = "Please Provide a Quote"
-    }
-    let isError = Object.keys(error) > 1;
-    if(isError){
-        CrudMongo.find()
-            .then(crudmongos => {
-              return  res.render('index',{crudmongos,error})
+    
+        let { name, quote, id } = req.body;
+        let error = {};
+      
+        if (!name) {
+          error.name = "Please provide a name";
+        }
+        if (!quote) {
+          error.quote = "Please provide a quote";
+        }
+      
+        let isError = Object.keys(error).length > 0;
+      
+        if (isError) {
+          CrudMongo.find()
+            .then((crudmongos) => {
+              res.render("index", { crudmongos, error });
             })
-            .catch(e => {
-                console.log(e)
-               return res.json({
-                    message: "error occurred"
-                })
-            })
-    }
-    if(id){
-        CrudMongo.findOneAndUpdate(
-            {_id: id},
-            {
-                $set:{
-                    name,quote
-                }
-            }
-        ).then(() => {
-            CrudMongo.find()
-                .then(crudmongos => {
-                    res.render('index',{crudmongos,error: {}})
-                })
-        }).catch(e => {
-            console.log(e)
-            return res.json({
-                message: "error occurred"
-            })
-        })
-    }else{
-        let crudmongo = new CrudMongo({
-            name,
-            quote
-          })
-          crudmongo.save()
-          .then( c => {
-              CrudMongo.find()
-                  .then(crudmongos => {
-                      res.render('index',{crudmongos,error: {}})
-                  })
+            .catch((e) => {
+              console.log(e);
+              res.json({
+                message: "An error occurred",
+              });
+            });
+        } else {
+          if (id) {
+            CrudMongo.findOneAndUpdate(
+              { _id: id },
+              {
+                $set: {
+                  name,
+                  quote,
+                },
+              }
+            )
+              .then(() => {
+                return CrudMongo.find();
+              })
+              .then((crudmongos) => {
+                res.render("index", { crudmongos, error: {} });
+              })
+              .catch((e) => {
+                console.log(e);
+                res.json({
+                  message: "An error occurred",
+                });
+              });
+          } else {
+            let crudmongo = new CrudMongo({
+              name,
+              quote,
+            });
+      
+            crudmongo
+              .save()
+              .then(() => {
+                return CrudMongo.find();
+              })
+              .then((crudmongos) => {
+                res.render("index", { crudmongos, error: {} });
+              })
+              .catch((e) => {
+                console.log(e);
+                res.json({
+                  message: "An error occurred",
+                });
+              });
           }
-          
-        )
-        .catch(e => {
-          console.log(e)
-          res.json({
-              message: "error occurred"
-          })
-      })
-    }
-   
+        }
+      };
+      
   
   
-  }
+  
+  
 
 
 exports.updateQuotes = (req,res) => {
